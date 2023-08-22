@@ -4,9 +4,11 @@ import asyncio
 from pyrogram import filters, Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import FloodWait
+from urllib.parse import quote
+from cloudscraper import create_scraper
 
 from bot import Bot
-from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON
+from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON, SHORTENER_DOMAIN, SHORTENER_API
 from helper_func import encode
 
 @Bot.on_message(filters.private & filters.user(ADMINS) & ~filters.command(['start','users','broadcast','batch','genlink','stats']))
@@ -49,3 +51,13 @@ async def new_post(client: Client, message: Message):
     except Exception as e:
         print(e)
         pass
+
+
+def short(longurl):
+    try:
+        shortener = SHORTENER_DOMAIN
+        api = SHORTENER_API
+        res = create_scraper().get(f'https://{shortener}/api?api={api}&url={quote(longurl)}').json()
+        return res['shortenedUrl']
+    except Exception as e:
+        return longurl
