@@ -1,4 +1,3 @@
-#(©)Codexbotz
 from urllib.parse import quote
 from cloudscraper import create_scraper
 from pyrogram import Client, filters
