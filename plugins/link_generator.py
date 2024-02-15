@@ -33,9 +33,11 @@ async def batch(client: Client, message: Message):
     string = f"get-{f_msg_id * abs(client.db_channel.id)}-{s_msg_id * abs(client.db_channel.id)}"
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
-    shortlink = short(link)
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Share URL", url=f'https://telegram.me/share/url?url={shortlink}')]])
-    await second_message.reply_text(f"<b>Here is your link</b>\n\n{shortlink}", quote=True, reply_markup=reply_markup)
+    short1 = short(link, DOMAIN1, API1)
+    short2 = short(link, DOMAIN2, API2)
+    await channel_message.reply_text(
+        f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>",
+        quote=True)
 
 
 @Bot.on_message(filters.private & filters.user(ADMINS) & filters.command('genlink'))
