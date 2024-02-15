@@ -35,7 +35,7 @@ async def batch(client: Client, message: Message):
     link = f"https://t.me/{client.username}?start={base64_string}"
     short1 = short(link, DOMAIN1, API1)
     short2 = short(link, DOMAIN2, API2)
-    await channel_message.reply_text(
+    await second_message.reply_text(
         f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>",
         quote=True)
 

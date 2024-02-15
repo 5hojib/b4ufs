@@ -6,7 +6,7 @@ from urllib.parse import quote
 from cloudscraper import create_scraper
 
 from bot import Bot
-from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON, DOMAIN1, API1
+from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON, DOMAIN1, API1, DOMAIN2, API2
 from helper_func import encode
 
 @Bot.on_message(filters.private & filters.user(ADMINS) & ~filters.command(['start','users','broadcast','batch','genlink','stats']))
@@ -25,14 +25,18 @@ async def channel_post(client: Client, message: Message):
     string = f"get-{converted_id}"
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
-    shortlink = short(link)
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Share URL", url=f'https://telegram.me/share/url?url={shortlink}')]])
+    short1 = short(link, DOMAIN1, API1)
+    short2 = short(link, DOMAIN2, API2)
 
-    await reply_text.edit(f"<b>Here is your link</b>\n\n{shortlink}", reply_markup=reply_markup, disable_web_page_preview = True)
+    await reply_text.edit(
+        f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>",
+        quote=True)
 
     if not DISABLE_CHANNEL_BUTTON:
         await post_message.edit_reply_markup(reply_markup)
 
+
+"""
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_ID))
 async def new_post(client: Client, message: Message):
 
@@ -43,19 +47,16 @@ async def new_post(client: Client, message: Message):
     string = f"get-{converted_id}"
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
-    shortlink = short(link)
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Share URL", url=f'https://telegram.me/share/url?url={shortlink}')]])
     try:
         await message.edit_reply_markup(reply_markup)
     except Exception as e:
         print(e)
+"""
 
 
-def short(longurl):
+def short(longurl, a, b):
     try:
-        shortener = DOMAIN1
-        api = API1
-        res = create_scraper().get(f'https://{shortener}/api?api={api}&url={quote(longurl)}').json()
+        res = create_scraper().get(f'https://{a}/api?api={b}&url={quote(longurl)}').json()
         return res['shortenedUrl']
     except Exception as e:
         return longurl
