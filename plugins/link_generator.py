@@ -3,7 +3,7 @@ from cloudscraper import create_scraper
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from bot import Bot
-from config import ADMINS, SHORTENER_DOMAIN, SHORTENER_API
+from config import ADMINS, DOMAIN1, API2, DOMAIN2, API2
 from helper_func import encode, get_message_id
 
 @Bot.on_message(filters.private & filters.user(ADMINS) & filters.command('batch'))
@@ -53,15 +53,15 @@ async def link_generator(client: Client, message: Message):
 
     base64_string = await encode(f"get-{msg_id * abs(client.db_channel.id)}")
     link = f"https://t.me/{client.username}?start={base64_string}"
-    shortlink = short(link)
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Share URL", url=f'https://telegram.me/share/url?url={shortlink}')]])
-    await channel_message.reply_text(f"<b>Here is your link</b>\n\n{shortlink}", quote=True, reply_markup=reply_markup)
+    short1 = short(link, DOMAIN1, API1)
+    short2 = short(link, DOMAIN2, API2)
+    await channel_message.reply_text(
+        f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>",
+        quote=True)
 
-def short(longurl):
+def short(longurl, a, b):
     try:
-        shortener = SHORTENER_DOMAIN
-        api = SHORTENER_API
-        res = create_scraper().get(f'https://{shortener}/api?api={api}&url={quote(longurl)}').json()
+        res = create_scraper().get(f'https://{a}/api?api={b}&url={quote(longurl)}').json()
         return res['shortenedUrl']
     except Exception as e:
         return longurl

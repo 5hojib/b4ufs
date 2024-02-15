@@ -3,8 +3,10 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
-SHORTENER_DOMAIN = os.environ.get('SHORTENER_DOMAIN', '')
-SHORTENER_API = os.environ.get('SHORTENER_API', '')
+DOMAIN1 = os.environ.get('DOMAIN1', '')
+API1 = os.environ.get('API1', '')
+DOMAIN2 = os.environ.get('DOMAIN2', '')
+API2 = os.environ.get('API2', '')
 APP_ID = int(os.environ.get("APP_ID", ""))
 API_HASH = os.environ.get("API_HASH", "")
 CHANNEL_ID = int(os.environ.get("CHANNEL_ID", ""))

@@ -6,7 +6,7 @@ from urllib.parse import quote
 from cloudscraper import create_scraper
 
 from bot import Bot
-from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON, SHORTENER_DOMAIN, SHORTENER_API
+from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON, DOMAIN1, API1
 from helper_func import encode
 
 @Bot.on_message(filters.private & filters.user(ADMINS) & ~filters.command(['start','users','broadcast','batch','genlink','stats']))
@@ -53,8 +53,8 @@ async def new_post(client: Client, message: Message):
 
 def short(longurl):
     try:
-        shortener = SHORTENER_DOMAIN
-        api = SHORTENER_API
+        shortener = DOMAIN1
+        api = API1
         res = create_scraper().get(f'https://{shortener}/api?api={api}&url={quote(longurl)}').json()
         return res['shortenedUrl']
     except Exception as e:

@@ -51,12 +51,22 @@
       "value": "False",
       "required": false
     },
-    "SHORTENER_DOMAIN": {
+    "DOMAIN1": {
       "description": "Shortener domain",
       "value": "",
       "required": false
     },
-    "SHORTENER_API": {
+    "API1": {
+      "description": "Shortener api",
+      "value": "",
+      "required": false
+    },
+    "DOMAIN2": {
+      "description": "Shortener domain",
+      "value": "",
+      "required": false
+    },
+    "API2": {
       "description": "Shortener api",
       "value": "",
       "required": false
