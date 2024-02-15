@@ -29,8 +29,7 @@ async def channel_post(client: Client, message: Message):
     short2 = short(link, DOMAIN2, API2)
 
     await reply_text.edit(
-        f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>",
-        quote=True)
+        f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>")
 
     if not DISABLE_CHANNEL_BUTTON:
         await post_message.edit_reply_markup(reply_markup)
