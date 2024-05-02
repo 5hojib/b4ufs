@@ -36,7 +36,7 @@ async def batch(client: Client, message: Message):
     short1 = short(link, DOMAIN1, API1)
     short2 = short(link, DOMAIN2, API2)
     await second_message.reply_text(
-        f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>",
+        f"<b>Here is your link</b>\n\noriginal link:\n<blockquote><code>{link}</code></blockquote>\n\nfirst short link:\n<blockquote><code>{short1}</code></blockquote>\n\nsecond short link:\n<blockquote><code>{short2}</code></blockquote>",
         quote=True)
 
 
@@ -58,7 +58,7 @@ async def link_generator(client: Client, message: Message):
     short1 = short(link, DOMAIN1, API1)
     short2 = short(link, DOMAIN2, API2)
     await channel_message.reply_text(
-        f"<b>Here is your link</b>\n\noriginal link: <code>{link}</code>\n\nfirst short link: <code>{short1}</code>\n\nsecond short link: <code>{short2}</code>",
+        f"<b>Here is your link</b>\n\noriginal link:\n<blockquote><code>{link}</code></blockquote>\n\nfirst short link:\n<blockquote><code>{short1}</code></blockquote>\n\nsecond short link:\n<blockquote><code>{short2}</code></blockquote>",
         quote=True)
 
 def short(longurl, a, b):
