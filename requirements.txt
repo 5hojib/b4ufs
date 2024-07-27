@@ -1,7 +1,6 @@
 aiohttp
 cloudscraper
 dnspython
-git+https://github.com/5hojib/pyrogram.git
+electrogram
 pyromod==1.5
 pymongo
-TgCrypto
